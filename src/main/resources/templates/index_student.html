@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Insert Image</title>
+</head>
+<body>
+<h2>How to insert image in database using Spring Boot</h2>
+
+<form th:action="@{/insertImage}" method="post" enctype="multipart/form-data">
+        <pre>
+            Name: <input type="text" name="name" />
+
+            Age: <input type="number" name="age" />
+
+            Photo: <input type="file" name="photo" />
+
+            <input type="submit" value="Submit" />
+        </pre>
+</form>
+
+<p th:text="${msg}"></p>
+</body>
+</html>
