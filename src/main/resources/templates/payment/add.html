@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AJAX POST Example</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<button id="addButton">Add</button>
+
+<div id="response"></div>
+
+<script>
+  // Thêm sự kiện cho nút Add
+  document.getElementById('addButton').addEventListener('click', function() {
+      // Gửi yêu cầu POST đến backend
+      $.ajax({
+          url: '/add-data',  // Đường dẫn đến controller của bạn
+          method: 'POST',     // Phương thức POST
+          contentType: 'application/json',  // Đảm bảo gửi dữ liệu dưới dạng JSON
+          data: JSON.stringify({  // Dữ liệu gửi đi có thể là bất kỳ đối tượng JSON nào
+              name: "John Doe",
+              age: 30
+          }),
+          success: function(response) {
+              // Xử lý dữ liệu JSON trả về từ backend
+              var data = JSON.parse(response);
+              document.getElementById('response').innerHTML = 'Name: ' + data.name + ', Age: ' + data.age;
+          },
+          error: function(error) {
+              console.log('Error:', error);
+          }
+      });
+  });
+</script>
+
+</body>
+</html>

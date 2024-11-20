@@ -1,8 +1,12 @@
 package mvc.codejava.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import mvc.codejava.entity.Role;
 import mvc.codejava.repository.ProductRepository;
+import mvc.codejava.repository.RoleRepository;
 import mvc.codejava.service.ProductService;
 import mvc.codejava.repository.UserRepository;
 import mvc.codejava.entity.Product;
@@ -27,27 +31,28 @@ public class AppController {
 
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@RequestMapping("/")
 	public String viewHomePage(Model model) {
+		List<User> userList = (List<User>) userRepository.findAll();
+		if(userList.isEmpty()){
+			Role role = new Role();
+			role.setName("ADMIN");
+			roleRepository.save(role);
 
-		if(!userRepository.existsById(2L)){
-			for(int i = 2; i <5; i++){
-				User user = new User();
-				user.setEnabled(true);
-				user.setUsername("loan"+i);
-				userRepository.save(user);
-			}
 			User user = new User();
 			user.setEnabled(true);
-			user.setUsername("loan");
-			//user.setId(1L);
+			user.setUsername("admin");
 
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String encodedPassword = passwordEncoder.encode("123456");
 			user.setPassword(encodedPassword);
-
-
+			Set<Role> roles = new HashSet<>();
+			roles.add(role);
+			user.setRoles(roles);
+			userRepository.save(user);
 		}
 
 		if(!productRepository.existsById(1L)){

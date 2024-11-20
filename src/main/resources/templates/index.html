@@ -6,26 +6,28 @@
 <title>Product Manager</title>
 </head>
 <body>
-<div align="center">	
+<div align="center">
 	<div sec:authorize="isAuthenticated()">
 		Welcome <b><span sec:authentication="name">Username</span></b>
 		&nbsp;
 		<i><span sec:authentication="principal.authorities">Roles</span></i>
 	</div>
-		
+
 	<form th:action="@{/logout}" method="post">
 		<input type="submit" value="Logout" />
 	</form>
-	
+
 	<h1>Product Manager</h1>
 	<div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
 		<a href="new">Create New Product</a>
 		<br>
 		<a href="student">Add New Photo</a>
+		<br>
+		<a href="payment">Payment</a>
 	</div>
-	
+
 	<br/><br/>
-	<h3>B?n có th? ??ng nh?p v?i tên là: admin. Pass là 123</h3>
+
 	<table border="1" cellpadding="10">
 		<thead>
 			<tr>
@@ -34,9 +36,9 @@
 				<th>Brand</th>
 				<th>Made In</th>
 				<th>Price</th>
-				
-				<th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">Actions</th>				
-				
+
+				<th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">Actions</th>
+
 			</tr>
 		</thead>
 		<tbody>
@@ -46,9 +48,9 @@
 				<td th:text="${product.brand}">Brand</td>
 				<td th:text="${product.madein}">Made in</td>
 				<td th:text="${product.price}">Price</td>
-				
+
 				<td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
-					<a th:href="@{'/edit/' + ${product.id}}">Edit</a>			
+					<a th:href="@{'/edit/' + ${product.id}}">Edit</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${product.id}}">Delete</a>
 				</td>
